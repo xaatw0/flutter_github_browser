@@ -1,0 +1,8 @@
+{
+  "@@locale":"en",
+  "appTitle":"Github Repository Search",
+  "searchHint": "Enter your search keywords!",
+  "githubConnectionFailed": "Unable to connect to GitHub. Please check your network connection.",
+  "searchLimitReached": "You have exceeded the number of searches. Please try again later.",
+  "end":"end"
+}
