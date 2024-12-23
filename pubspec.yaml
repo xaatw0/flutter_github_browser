@@ -1,0 +1,10 @@
+name: flutter_github_browser
+publish_to: none
+environment:
+  sdk: ^3.6.0
+
+workspace:
+  - packages/domain
+  - packages/executable
+  - packages/data
+  - packages/ui
