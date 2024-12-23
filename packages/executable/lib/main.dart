@@ -1,20 +1,11 @@
+import 'package:data/http/dio_http_service.dart';
+import 'package:data/repositories/github/github_repository_search_repository.dart';
+import 'package:domain/services/service_locator.dart';
 import 'package:flutter/material.dart';
+import 'package:ui/main.dart';
 
 void main() {
+  ServiceLocator.init(DioHttpService(), GithubRepositorySearchRepository());
+
   runApp(const MainApp());
-}
-
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
-    );
-  }
 }
