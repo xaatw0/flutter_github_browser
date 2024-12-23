@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
-
-void main() {
-  runApp(const MainApp());
-}
+import 'package:ui/pages/search_repositories/search_repositories_page.dart';
+import 'l10n-gen/l10n.dart';
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+    return MaterialApp(
+      localizationsDelegates: L10n.localizationsDelegates,
+      supportedLocales: L10n.supportedLocales,
+      home: SearchRepositoriesPage(),
     );
   }
 }
