@@ -1,19 +1,21 @@
-environment:
-  flutter: fvm
+
 
 workflows:
   common-workflow:
     name: process after download
     instance_type: mac_mini_m2
     max_build_duration: 60
+    environment:
+      flutter: fvm
     scripts:
       - name: Get Flutter packages
         script: |
           flutter doctor
           flutter pub get
-          cd packages/executable
+      - name: generate l10n
+        working_directory: packages/executable
+        script: |
           flutter gen-l10n
-          cd ../..
 
   android-workflow:
     name: Android Workflow
