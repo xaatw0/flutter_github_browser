@@ -2,7 +2,7 @@
 
 workflows:
   common-workflow:
-    name: process after download
+    name: Basic process
     instance_type: mac_mini_m2
     max_build_duration: 60
     environment:
@@ -13,10 +13,17 @@ workflows:
           flutter doctor
           flutter pub get
       - name: Generate l10n
+        working_directory: packages/ui
         script: |
-          cd packages/executable
           flutter gen-l10n
-          cd ../..
+      - name: Build Android
+        working_directory: packages/executable
+        script: |
+          flutter build apk
+      - name: Build iOS
+        working_directory: packages/executable
+        script: |
+          flutter build ios
 
   android-workflow:
     name: Android Workflow
