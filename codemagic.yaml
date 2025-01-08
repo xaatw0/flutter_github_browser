@@ -24,6 +24,8 @@ workflows:
         working_directory: packages/executable
         script: |
           flutter build ios
+    artifacts:
+      - packages/executable/build/**/outputs/**/*.apk
 
   android-workflow:
     name: Android Workflow
