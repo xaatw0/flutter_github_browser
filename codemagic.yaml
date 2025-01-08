@@ -1,6 +1,4 @@
 definitions:
-  working_directory: &working_directory
-    working_directory: packages\executable
 
 workflows:
   common-workflow:
@@ -9,6 +7,8 @@ workflows:
     max_build_duration: 60
     environment:
       flutter: fvm
+      vars:
+        EXECUTABLE_DIRECTORY: packages\executable
     scripts:
       - name: Get Flutter packages
         script: |
@@ -19,11 +19,11 @@ workflows:
         script: |
           flutter gen-l10n
       - name: Build Android
-        <<: *working_directory
+        working_directory: $EXECUTABLE_DIRECTORY
         script: |
           flutter build apk
       - name: Build iOS
-        <<: *working_directory
+        working_directory: $EXECUTABLE_DIRECTORY
         script: |
           flutter build ios
     artifacts:
