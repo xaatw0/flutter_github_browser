@@ -1,0 +1,59 @@
+environment:
+  flutter: fvm
+
+workflows:
+  common-workflow:
+    name: process after download
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    scripts:
+      - name: Get Flutter packages
+        script: |
+          flutter doctor
+          flutter pub get
+          cd packages/executable
+          flutter gen-l10n
+          cd ../..
+
+  android-workflow:
+    name: Android Workflow
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    scripts:
+      - name: Set up local.properties
+        script: |
+          echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
+      - name: Build AAB with Flutter
+        script: |
+          BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))      
+          cd packages/executable
+          flutter build appbundle --release \
+            --build-name=1.0.$BUILD_NUMBER \
+            --build-number=$BUILD_NUMBER
+    artifacts:
+      - packages/executable/build/**/outputs/**/*.aab
+      - packages/executable/build/**/outputs/**/mapping.txt
+      - packages/executable/flutter_drive.log
+
+  ios-workflow:
+    name: iOS Workflow
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    scripts:
+      - name: Set up code signing settings on Xcode project
+        script: |
+          xcode-project use-profiles
+      - name: Install pods
+        script: |
+          find . -name "Podfile" -execdir pod install \;
+      - name: Flutter build ipa and automatic versioning
+        script: |
+          cd packages/executable
+          flutter build ios --release \
+            --build-name=1.0.0 \
+            --build-number=$(($(app-store-connect get-latest-testflight-build-number "$APP_ID") + 1)) \
+            --export-options-plist=/Users/builder/export_options.plist
+    artifacts:
+      - packages/executable/build/ios/ipa/*.ipa
+      - packages/executable/tmp/xcodebuild_logs/*.log
+      - packages/executable/flutter_drive.log
