@@ -13,9 +13,9 @@ workflows:
         script: |
           source codemagic.env
           echo "EXECUTABLE_DIRECTORY=$EXECUTABLE_DIRECTORY" >> $CM_ENV
-          echo "$UI_DIRECTORY=$UI_DIRECTORY" >> $CM_ENV
+          echo "UI_DIRECTORY=$UI_DIRECTORY" >> $CM_ENV
       - name: Echo Environment Variables
-        script: echo $EXECUTABLE_DIRECTORY
+        script: echo "$EXECUTABLE_DIRECTORY $UI_DIRECTORY"
       - name: Get Flutter packages
         script: |
           flutter doctor
