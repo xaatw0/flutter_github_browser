@@ -1,6 +1,6 @@
 definitions:
-  vars:
-    WORKING_DIRECTORY: "packages/executable"
+  working_directory: &working_directory
+    working_directory: packages\executable
 
 workflows:
   common-workflow:
@@ -19,15 +19,15 @@ workflows:
         script: |
           flutter gen-l10n
       - name: Build Android
-        working_directory: "${WORKING_DIRECTORY}"
+        <<: *working_directory
         script: |
           flutter build apk
       - name: Build iOS
-        working_directory: "${WORKING_DIRECTORY}"
+        <<: *working_directory
         script: |
           flutter build ios
     artifacts:
-      - "${WORKING_DIRECTORY}/build/**/outputs/**/*.apk"
+      - "packages/executable/build/**/outputs/**/*.apk"
 
   android-workflow:
     name: Android Workflow
