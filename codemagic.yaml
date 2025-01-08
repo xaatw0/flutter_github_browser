@@ -19,15 +19,15 @@ workflows:
         script: |
           flutter gen-l10n
       - name: Build Android
-        working_directory: $WORKING_DIRECTORY
+        working_directory: "${WORKING_DIRECTORY}"
         script: |
           flutter build apk
       - name: Build iOS
-        working_directory: $WORKING_DIRECTORY
+        working_directory: "${WORKING_DIRECTORY}"
         script: |
           flutter build ios
     artifacts:
-      - $WORKING_DIRECTORY/build/**/outputs/**/*.apk
+      - "${WORKING_DIRECTORY}/build/**/outputs/**/*.apk"
 
   android-workflow:
     name: Android Workflow
