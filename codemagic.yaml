@@ -1,4 +1,7 @@
 definitions:
+  environment:
+    vars: &vars
+      EXECUTABLE_DIRECTORY: packages/executable
 
 workflows:
   common-workflow:
@@ -8,14 +11,8 @@ workflows:
     environment:
       flutter: fvm
       vars:
-        EXECUTABLE_DIRECTORY: packages/executable
+        *vars
     scripts:
-      - name: echo vars
-        script: echo $EXECUTABLE_DIRECTORY
-      - name: echo test
-        script: |
-          pwd
-          ls -l $EXECUTABLE_DIRECTORY
       - name: Get Flutter packages
         script: |
           flutter doctor
@@ -28,10 +25,6 @@ workflows:
         working_directory: $EXECUTABLE_DIRECTORY
         script: |
           flutter build apk
-      - name: Build iOS
-        working_directory: $EXECUTABLE_DIRECTORY
-        script: |
-          flutter build ios
     artifacts:
       - "packages/executable/build/**/outputs/**/*.apk"
 
