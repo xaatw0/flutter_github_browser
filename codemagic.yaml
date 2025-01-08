@@ -2,6 +2,7 @@ definitions:
   environment:
     vars: &vars
       EXECUTABLE_DIRECTORY: packages/executable
+      UI_DIRECTORY: packages/ui
 
 workflows:
   common-workflow:
@@ -18,7 +19,7 @@ workflows:
           flutter doctor
           flutter pub get
       - name: Generate l10n
-        working_directory: packages/ui
+        working_directory: $UI_DIRECTORY
         script: |
           flutter gen-l10n
       - name: Build Android
@@ -26,7 +27,7 @@ workflows:
         script: |
           flutter build apk
     artifacts:
-      - "packages/executable/build/**/outputs/**/*.apk"
+      - "$EXECUTABLE_DIRECTORY/build/**/outputs/**/*.apk"
 
   android-workflow:
     name: Android Workflow
