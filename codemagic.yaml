@@ -5,12 +5,15 @@ workflows:
     max_build_duration: 60
     environment:
       flutter: fvm
+      vars:
+        EXECUTABLE_DIRECTORY: $EXECUTABLE_DIRECTORY
+        UI_DIRECTORY: $UI_DIRECTORY
     scripts:
       - name: Load Environment Variables
         script: |
-          if [ -f codemagic.env ]; then
-            export $(cat codemagic.env | xargs)
-          fi
+          source codemagic.env
+          echo "EXECUTABLE_DIRECTORY=$EXECUTABLE_DIRECTORY" >> $CM_ENV
+          echo "$UI_DIRECTORY=$UI_DIRECTORY" >> $CM_ENV
       - name: Get Flutter packages
         script: |
           flutter doctor
