@@ -12,10 +12,11 @@ workflows:
         script: |
           flutter doctor
           flutter pub get
-      - name: generate l10n
-        working_directory: packages/executable
+      - name: Generate l10n
         script: |
+          cd packages/executable
           flutter gen-l10n
+          cd ../..
 
   android-workflow:
     name: Android Workflow
