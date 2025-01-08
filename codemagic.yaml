@@ -21,11 +21,11 @@ workflows:
         script: |
           flutter gen-l10n
       - name: Build Android
-        working_directory: $EXECUTABLE_DIRECTORY
+        working_directory: "$EXECUTABLE_DIRECTORY"
         script: |
           flutter build apk
       - name: Build iOS
-        working_directory: $EXECUTABLE_DIRECTORY
+        working_directory: "$EXECUTABLE_DIRECTORY"
         script: |
           flutter build ios
     artifacts:
