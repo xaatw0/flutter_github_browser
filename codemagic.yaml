@@ -1,9 +1,3 @@
-definitions:
-  environment:
-    vars: &vars
-      EXECUTABLE_DIRECTORY: packages/executable
-      UI_DIRECTORY: packages/ui
-
 workflows:
   common-workflow:
     name: Basic process
@@ -11,9 +5,12 @@ workflows:
     max_build_duration: 60
     environment:
       flutter: fvm
-      vars:
-        *vars
     scripts:
+      - name: Load Environment Variables
+        script: |
+          if [ -f codemagic.env ]; then
+            export $(cat codemagic.env | xargs)
+          fi
       - name: Get Flutter packages
         script: |
           flutter doctor
