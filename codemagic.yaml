@@ -10,6 +10,8 @@ workflows:
       vars:
         EXECUTABLE_DIRECTORY: packages\executable
     scripts:
+      - name: echo vars
+        script: echo $EXECUTABLE_DIRECTORY
       - name: Get Flutter packages
         script: |
           flutter doctor
